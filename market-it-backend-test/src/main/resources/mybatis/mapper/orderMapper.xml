@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.repository.OrderRepository">
+	<!-- 단일 주문조회 -->
+ 	<select id="selectOrder" resultType="com.example.demo.model.Order">
+ 		/* OrderRepository - selectOrder */
+    	SELECT 
+    		order_idx, order_id, order_name, status
+    	FROM tb_order
+    	<where>
+	    	order_id = #{orderId}
+	    </where>
+  	</select>
+  	
+  	<!-- 주문 목록조회 -->
+ 	<select id="selectOrderList" resultType="com.example.demo.model.Order">
+ 		/* OrderRepository - selectOrderList */
+    	SELECT 
+    		order_idx, order_id, order_name, status
+    	FROM tb_order
+  	</select>
+  
+ 	<!-- 주문 접수처리 -->
+	<insert id="insertOrder">
+		/* OrderRepository - insertOrder */
+		INSERT INTO tb_order (
+			order_id, order_name, status
+		) 
+		VALUES
+		(#{orderId}, #{orderName}, 0)
+	</insert>
+	
+	<!-- 주문 완료처리 -->
+	<update id="updateOrder">
+		/* OrderRepository - updateOrder */
+		UPDATE tb_order 
+		SET 
+			status = 1
+		WHERE 
+			order_id = #{orderId}
+	</update>
+</mapper>
